@@ -1,0 +1,425 @@
+import the objects or models from local space. // I:O
+
+create an opject for imported model // object
+
+create dictionary / array index for the builtin fixtures.{}
+
+create function which takes argument as fixture type and object
+	action: fixture get applied to the model, return fixture modle object
+
+function to save the updated fixture model()
+
+--------------------------------------------------------------------
+
+bpy.ops.object.editmode_toggle()
+bpy.context.space_data.system_bookmarks_active = 3
+bpy.ops.image.open(filepath="C:\\Users\\vs6993\\Downloads\\Red_brick_wall_texture.JPG", directory="C:\\Users\\vs6993\\Downloads\\", files=[{"name":"Red_brick_wall_texture.JPG", "name":"Red_brick_wall_texture.JPG"}], relative_path=True, show_multiview=False)
+	
+bpy.ops.object.editmode_toggle()
+bpy.ops.transform.trackball(value=(-0.03, -0.08), mirror=False, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+bpy.context.area.ui_type = 'ShaderNodeTree'
+bpy.context.area.ui_type = 'ShaderNodeTree'
+bpy.context.area.ui_type = 'VIEW_3D'
+bpy.context.space_data.shading.type = 'MATERIAL'
+bpy.context.area.ui_type = 'INFO'
+
+
+------------------------------------------------------------------------
+
+import bpy
+from math import radians
+
+bpy.ops.mesh.primitive_monkey_add(size=6, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
+monkey = bpy.context.active_object
+
+#monkey.rotation_euler[0] += radians[45]
+
+image = bpy.ops.image.open(filepath="C:\\Users\\vs6993\\Downloads\\Red_brick_wall_texture.JPG", directory="C:\\Users\\vs6993\\Downloads\\", files=[{"name":"Red_brick_wall_texture.JPG", "name":"Red_brick_wall_texture.JPG"}], relative_path=True, show_multiview=False)
+bpy.ops.object.shade_smooth()
+
+#bpy.context.space_data.context = 'MATERIAL'
+
+mod_subsurf = monkey.modifiers.new("my modifier", "SUBSURF")
+monkey.modifiers["my modifier"].levels=3
+
+
+bpy.ops.object.editmode_toggle() #changing to edit mode
+
+bpy.ops.uv.smart_project()
+
+
+bpy.ops.transform.trackball(value=(-0.03, -0.08), mirror=False, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+
+bpy.context.area.ui_type = 'ShaderNodeTree'
+
+bpy.context.area.ui_type = 'VIEW_3D'
+bpy.context.space_data.shading.type = 'MATERIAL'
+bpy.context.area.ui_type = 'INFO'
+
+----------------------------------------------------------------------------------------
+
+
+bpy.ops.object.delete(use_global=False, confirm=False)
+Deleted 1 object(s)
+bpy.context.area.ui_type = 'INFO'
+bpy.ops.object.delete(use_global=False, confirm=False)
+Deleted 1 object(s)
+bpy.ops.mesh.primitive_monkey_add(size=2, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
+bpy.ops.transform.resize(value=(3.34816, 3.34816, 3.34816), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', mirror=False, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+bpy.context.space_data.context = 'MATERIAL'
+bpy.context.space_data.context = 'MATERIAL'
+bpy.ops.material.new()
+bpy.context.space_data.system_bookmarks_active = 3
+bpy.ops.image.open(filepath="C:\\Users\\vs6993\\Downloads\\Red_brick_wall_texture.JPG", directory="C:\\Users\\vs6993\\Downloads\\", files=[{"name":"Red_brick_wall_texture.JPG", "name":"Red_brick_wall_texture.JPG"}], relative_path=True, show_multiview=False)
+bpy.context.space_data.shading.type = 'MATERIAL'
+bpy.context.space_data.shading.type = 'RENDERED'
+bpy.ops.transform.trackball(value=(-3.52, 6.69), mirror=False, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+
+
+-------------------------------------------------------------------------------------------
+#Working
+
+import bpy
+
+#deleting previos active object 
+bpy.ops.object.delete(use_global=False, confirm=False)
+
+bpy.ops.mesh.primitive_monkey_add(size=5, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
+monkey = bpy.context.active_object
+
+mod_subsurf = monkey.modifiers.new("my modifier", "SUBSURF")
+mod_subsurf.levels=3
+
+bpy.ops.object.shade_smooth()
+
+#creating new material
+new_mat = bpy.data.materials.new("my_material")
+monkey.data.materials.append(new_mat)
+
+new_mat.use_nodes = True
+nodes = new_mat.node_tree.nodes
+
+for m in bpy.data.materials:
+for k,v in m.node_tree.nodes.items()
+print(k)
+
+
+C:\Users\vs6993\Pictures\brad-huchteman-stone-mountain.resized.jpg
+
+https://blender.stackexchange.com/questions/201412/how-to-load-an-image-from-disc-and-assign-it-to-a-newly-created-image-texture-no
+
+**************************************************************************************************
+
+import bpy
+import os
+import time
+
+
+
+
+mat = bpy.context.object.active_material
+nodes = mat.node_tree.nodes
+nodes.clear()
+
+node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+node_principled.location = 0,0
+node_tex = nodes.new('ShaderNodeTexImage')
+ 
+
+node_tex.image = bpy.data.images.load(r"C:\Users\vs6993\Downloads\Red_brick_wall_texture.JPG")
+
+node_tex.location = -400,0
+node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+node_output.location = 400,0
+links = mat.node_tree.links
+link = links.new(node_tex.outputs["Color"], node_principled.inputs["Base Color"])
+link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+
+time.sleep(4)
+node_tex.image = bpy.data.images.load(r"C:\Users\vs6993\Pictures\CycleOfLife.jpg")
+
+TEXTURE_IMAGES_FOLDER= r"D:\Blender\texture_imges"
+SAVE_BLENDER_FILE= r""
+
+#for m in bpy.data.materials:
+#    for k,v in m.node_tree.nodes.items():
+#        print(k)
+
+TextureImageList = os.listdir(TEXTURE_IMAGES_FOLDER)
+for image in TextureImageList:
+    pass
+	
+	
+////////////////////////////////////////////////////////////////////////////
+
+import bpy
+import os
+import time
+
+
+
+bpy.ops.object.delete(use_global=False, confirm=False)
+
+bpy.ops.mesh.primitive_monkey_add(size=3, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
+
+active_obj = bpy.context.active_object
+
+mod_subsurf = active_obj.modifiers.new("my modifier", "SUBSURF")
+mod_subsurf.levels=4
+
+
+#active_material = bpy.context.object.active_material
+#nodes = mat.node_tree.nodes
+#nodes.clear()
+
+new_mat = bpy.data.materials.new("my_material")
+active_obj.data.materials.append(new_mat)
+
+new_mat.use_nodes = True
+nodes = new_mat.node_tree.nodes
+
+node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+node_principled.location = 0,0
+node_tex = nodes.new('ShaderNodeTexImage')
+ 
+for image in os.listdir(IMAGE_ROOT_FOLDER):
+	image = IMAGE_ROOT_FOLDER + image
+    
+	node_tex.image = bpy.data.images.load(image)
+
+	node_tex.location = -400,0
+	node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+	node_output.location = 400,0
+	links = mat.node_tree.links
+	link = links.new(node_tex.outputs["Color"], node_principled.inputs["Base Color"])
+	link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+	
+	
+*****************************************************************************************
+
+import bpy
+import os
+import time
+
+
+IMAGE_ROOT_FOLDER = "D:\\Blender\\texture_imges\\"
+
+mat = bpy.context.object.active_material
+nodes = mat.node_tree.nodes
+nodes.clear()
+
+node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+node_principled.location = 0,0
+node_tex = nodes.new('ShaderNodeTexImage')
+ 
+ 
+for image in os.listdir(IMAGE_ROOT_FOLDER):
+    image = IMAGE_ROOT_FOLDER + image
+
+    node_tex.image = bpy.data.images.load(image)
+
+    node_tex.location = -400,0
+    node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+    node_output.location = 400,0
+    links = mat.node_tree.links
+    link = links.new(node_tex.outputs["Color"], node_principled.inputs["Base Color"])
+    link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+	
+	
+---------------------------------------------------------------------------------------------
+
+import bpy
+import os
+import time
+
+
+IMAGE_ROOT_FOLDER = "D:\\Blender\\texture_imges\\"
+
+def render_object(root_path):
+    
+    mat = bpy.context.object.active_material
+    nodes = mat.node_tree.nodes
+    nodes.clear()
+
+    node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+    node_principled.location = 0,0
+    node_tex = nodes.new('ShaderNodeTexImage')
+    
+    node_tex.image = bpy.data.images.load(root_path)
+    
+    node_tex.location = -400,0
+    node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+    node_output.location = 400,0
+    links = mat.node_tree.links
+    link = links.new(node_tex.outputs["Color"], node_principled.inputs["Base Color"])
+    link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+
+ 
+for image in os.listdir(IMAGE_ROOT_FOLDER):
+    image = IMAGE_ROOT_FOLDER + image
+    render_object(image)
+    time.sleep(4)
+	
+*********************************************************************************
+
+//crashing
+
+import bpy
+import os
+import time
+
+
+IMAGE_ROOT_FOLDER = "D:\\Blender\\texture_imges\\"
+
+def render_object(root_path):
+    
+    if(bpy.context.object.active_material):
+        mat = bpy.context.object.active_material
+        nodes = mat.node_tree.nodes
+        nodes.clear()
+        create_nodes(mat,nodes,root_path)
+        
+        
+    else:
+        active_obj = bpy.context.active_object
+        new_mat = bpy.data.materials.new("my_material")
+        active_obj.data.materials.append(new_mat)
+        
+        new_mat.use_nodes = True
+        nodes = new_mat.node_tree.nodes
+        nodes.clear()
+        create_nodes(new_mat,nodes,root_path)
+        
+    
+def create_nodes(new_mat ,nodes,root_path):
+    node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+    node_principled.location = 0,0
+    node_tex = nodes.new('ShaderNodeTexImage')
+    
+    node_tex.image = bpy.data.images.load(root_path)
+    
+    node_tex.location = -400,0
+    node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+    node_output.location = 400,0
+    links = new_mat.node_tree.links
+    link = links.new(node_tex.outputs["Color"], node_principled.inputs["Base Color"])
+    link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+
+ 
+for image in os.listdir(IMAGE_ROOT_FOLDER):
+    image = IMAGE_ROOT_FOLDER + image
+    render_object(image)
+    time.sleep(2)
+	
+	
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+
+
+import bpy
+import os
+import time
+
+
+
+def create_nodes(new_mat ,nodes,root_path = ""):
+    new_mat.use_nodes = True
+    node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+    node_principled.location = 0,0
+    node_tex = nodes.new('ShaderNodeTexImage')
+    
+    node_brick = nodes.new('ShaderNodeTexBrick')
+    node_magic = nodes.new('ShaderNodeTexMagic')
+    node_checker = nodes.new('ShaderNodeTexChecker')
+    node_environment = nodes.new('ShaderNodeTexEnvironment')
+    node_gradient = nodes.new('ShaderNodeTexGradient')
+    node_Noise = nodes.new('ShaderNodeTexNoise')
+    node_Point = nodes.new('ShaderNodeTexPointDensity')
+    node_Voronoi = nodes.new('ShaderNodeTexVoronoi')
+    node_Wave = nodes.new('ShaderNodeTexWave')
+    node_WhiteNoise = nodes.new('ShaderNodeTexWhiteNoise')
+    
+      
+    
+#    node_tex.image = bpy.data.images.load(root_path)
+    
+    node_tex.location = -400,0
+    node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+    node_output.location = 400,0
+    links = new_mat.node_tree.links
+    link = links.new(node_environment.outputs["Color"], node_principled.inputs["Base Color"])
+    link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+
+
+mat = bpy.context.object.active_material
+nodes = mat.node_tree.nodes
+nodes.clear()
+create_nodes(mat,nodes)
+
+
+
+*************************************************************************************
+
+import bpy
+import os
+import time
+
+
+Class New_materila():
+    
+    def __init__(self):
+        self.mat = bpy.context.object.active_material
+        self.nodes = mat.node_tree.nodes
+        self.nodes.clear()
+        self.create_nodes(mat,nodes)
+        
+
+    def create_nodes(self,new_mat ,nodes,root_path = ""):
+        new_mat.use_nodes = True
+        node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+        node_principled.location = 0,0
+        node_tex = nodes.new('ShaderNodeTexImage')
+        
+        self.node_brick = nodes.new('ShaderNodeTexBrick')
+        self.node_magic = nodes.new('ShaderNodeTexMagic')
+        self.node_checker = nodes.new('ShaderNodeTexChecker')
+        self.node_environment = nodes.new('ShaderNodeTexEnvironment')
+        self.node_gradient = nodes.new('ShaderNodeTexGradient')
+        self.node_Noise = nodes.new('ShaderNodeTexNoise')
+        self.node_Point = nodes.new('ShaderNodeTexPointDensity')
+        self.node_Voronoi = nodes.new('ShaderNodeTexVoronoi')
+        self.node_Wave = nodes.new('ShaderNodeTexWave')
+        self.node_WhiteNoise = nodes.new('ShaderNodeTexWhiteNoise')
+        
+          
+#    node_tex.image = bpy.data.images.load(root_path)
+    
+        node_tex.location = -400,0
+        node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+        node_output.location = 400,0
+        links = new_mat.node_tree.links
+        link = links.new(node_magic.outputs["Color"], node_principled.inputs["Base Color"])
+        link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+
+if "__main__" =="__file__":
+	
+	exception hi
+    mat = bpy.context.object.active_material
+    nodes = mat.node_tree.nodes
+    nodes.clear()
+	debug
+	
+create_nodes(mat,nodes)
+
+
+-----------------------------------------------------
+ob = bpy.context.scene.objects["Cube"]       # Get the object
+bpy.ops.object.select_all(action='DESELECT') # Deselect all objects
+bpy.context.view_layer.objects.active = ob
+
+
+bpy.ops.object.select_all()
+bpy.ops.object.join()
+bpy.ops.export_scene.obj(filepath=r"C:\Users\vs6993\Documents\mango5.obj")
+	
+	
