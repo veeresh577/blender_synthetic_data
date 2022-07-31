@@ -1,17 +1,18 @@
 # Blender MTL File: 'apple_images(8).obj'
 # Material Count: 2
 
-newmtl (null).027
-Ns 96.078421
+newmtl (null).028
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.640000 0.640000 0.640000
+Kd 0.800000 0.800000 0.800000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
-Ni 1.000000
+Ni 1.450000
 d 1.000000
 illum 2
+map_Kd D:\\Blender\\apple\\stem\\Apple_stem.jpg
 
-newmtl Material.027
+newmtl Material.028
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
