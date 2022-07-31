@@ -1,6 +1,7 @@
 import bpy
 import os
 
+
 OBECT_ROOT_PATH = "D:\\Blender\\3D_MODELS\\apple_seperated.obj" 
 SAVE_OBJECTS = ""
 APPLE_body = "D:\\Blender\\apple\\body\\download(2).jpg"
@@ -116,6 +117,7 @@ Body_object = "body_Manzana.001"
     
 
 for image in os.listdir(IMAGE_ROOT_FOLDER):
+   
     
     import_object(OBECT_ROOT_PATH)
     
@@ -137,13 +139,17 @@ for image in os.listdir(IMAGE_ROOT_FOLDER):
         if "body" in obj.name:
           
                 set_active_object(obj)
-                apply_Image_texture(APPLE_body,obj)
+                apply_Image_texture(image,obj)
                 
                 #bpy.ops.object.select_all()
                 #bpy.ops.object.join(object_list)
-                bpy.ops.export_scene.obj(filepath=r"D:\Blender\apple\objects\apple_" + image_name +".obj")
+                
                 #bpy.ops.wm.save_as_mainfile(object_list, filepath= r"D:\Blender\apple\objects\apple_" + image_name +".obj")
     
+    ctx = bpy.context.copy()
+    ctx['selected_objects'] = object_list
+    bpy.ops.object.join(ctx)
+    bpy.ops.export_scene.obj(filepath=r"D:\Blender\apple\objects\apple_" + image_name +".obj")
     object_list.clear()        
     Delete_all_objects()
     
