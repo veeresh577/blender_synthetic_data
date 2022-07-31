@@ -3,14 +3,15 @@ import os
 
 OBECT_ROOT_PATH = "D:\\Blender\\3D_MODELS\\apple_seperated.obj" 
 SAVE_OBJECTS = ""
-APPLE_body = "D:\\Blender\\apple\\body\\download(3).jpg"
+APPLE_body = "D:\\Blender\\apple\\body\\download(2).jpg"
 
 IMAGE_ROOT_FOLDER = "D:\\Blender\\apple\\body\\"
 STEM_IMAGE_PATH = "D:\\Blender\\apple\\stem\\Apple_stem.jpg"
 
-imported_object = bpy.ops.import_scene.obj(filepath=OBECT_ROOT_PATH)
+#imported_object = bpy.ops.import_scene.obj(filepath=OBECT_ROOT_PATH)
+
 """ storing the objects in the list"""
-object_list = [ obj for obj in bpy.data.objects if obj.name != "Camera" ]
+object_list = []
 
 
 """set active object"""
@@ -27,6 +28,16 @@ def deselect_active_object( object):
     #bpy.data.collections[Collection_name].objects[object_name].select_set(False)
     bpy.data.objects[object.name].select_set(False)
     
+    """import the objetc"""
+def import_object(path):
+    imported_object = bpy.ops.import_scene.obj(filepath=path)
+     
+    """Delete all objects """
+def Delete_all_objects():
+    bpy.ops.object.select_all()
+    bpy.ops.object.delete()
+    
+    
  
     
 #iterate over objects in collections
@@ -35,7 +46,7 @@ def deselect_active_object( object):
 #        object_list.append(obj)
         
 
-def apply_Image_texture(root_path):
+def apply_Image_texture(root_path,obj):
     """
     This function imports the image and superimposes it onto the active abject.
     :param root_path:
@@ -51,6 +62,7 @@ def apply_Image_texture(root_path):
         else:
             
             active_obj = bpy.context.view_layer.objects.active
+            #active_obj = obj
             new_mat = bpy.data.materials.new("my_material")
             active_obj.data.materials.append(new_mat)
 
@@ -103,28 +115,36 @@ Body_object = "body_Manzana.001"
 #    apply_Image_texture(image)
     
 
-for obj in object_list:
+for image in os.listdir(IMAGE_ROOT_FOLDER):
     
-    if "stem" in obj.name:
-        set_active_object(obj)
-        apply_Image_texture(STEM_IMAGE_PATH)
-        deselect_active_object(obj)
-#        bpy.context.view_layer.objects.active = obj
-#        bpy.data.objects[obj.name].select_set(True)
+    import_object(OBECT_ROOT_PATH)
     
-    if "body" in obj.name:
-        for image in os.listdir(IMAGE_ROOT_FOLDER):
+    #global object_list
+    object_list = [ obj for obj in bpy.data.objects if obj.name != "Camera" ]
             
-            image_name = image.split('.')[0]
-            print("---------------image_name :",image_name)
-            image = IMAGE_ROOT_FOLDER + image
+    image_name = image.split('.')[0]
+    print("---------------image_name :",image_name)
+    image = IMAGE_ROOT_FOLDER + image
+
+    for obj in object_list:
+        
+        if "stem" in obj.name:
             set_active_object(obj)
-            apply_Image_texture(image)
-            
-#            bpy.ops.object.select_all()
-#            bpy.ops.object.join(object_list)
-            bpy.ops.export_scene.obj(filepath=r"D:\Blender\apple\objects\apple_" + image_name +".obj")
-                    
+            apply_Image_texture(STEM_IMAGE_PATH,obj)
+            deselect_active_object(obj)
+           
         
-         
-        
+        if "body" in obj.name:
+          
+                set_active_object(obj)
+                apply_Image_texture(APPLE_body,obj)
+                
+                #bpy.ops.object.select_all()
+                #bpy.ops.object.join(object_list)
+                bpy.ops.export_scene.obj(filepath=r"D:\Blender\apple\objects\apple_" + image_name +".obj")
+                #bpy.ops.wm.save_as_mainfile(object_list, filepath= r"D:\Blender\apple\objects\apple_" + image_name +".obj")
+    
+    object_list.clear()        
+    Delete_all_objects()
+    
+    
