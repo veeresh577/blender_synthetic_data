@@ -27,7 +27,19 @@ def deselect_active_object( object):
     #bpy.data.collections[Collection_name].objects[object_name].select_set(False)
     bpy.data.objects[object.name].select_set(False)
     
+<<<<<<< Updated upstream
  
+=======
+    """import the objetc"""
+def import_object(path):
+    imported_object = bpy.ops.import_scene.obj(filepath=path)
+     
+    """Delete all objects """
+def Delete_all_objects():
+    bpy.ops.object.select_all()
+    bpy.ops.object.delete()
+    
+>>>>>>> Stashed changes
     
 #iterate over objects in collections
 #for obj in bpy.data.objects:
@@ -85,12 +97,7 @@ def create_nodes(new_mat ,nodes,root_path):
     link = links.new(node_tex.outputs["Color"], node_principled.inputs["Base Color"])
     link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
         
-    
 
-Stem_object = "stem_Manzana.002"
-Body_object = "body_Manzana.001"
-
-"""Iterate our images in local folder"""
 
 """set stem as active object and apply texture"""
 #set_active_object("Collection",Stem_object)
@@ -101,8 +108,8 @@ Body_object = "body_Manzana.001"
 #for image in os.listdir(IMAGE_ROOT_FOLDER):
 #    image = IMAGE_ROOT_FOLDER + image
 #    apply_Image_texture(image)
-    
 
+<<<<<<< Updated upstream
 for obj in object_list:
     
     if "stem" in obj.name:
@@ -111,6 +118,14 @@ for obj in object_list:
         deselect_active_object(obj)
 #        bpy.context.view_layer.objects.active = obj
 #        bpy.data.objects[obj.name].select_set(True)
+=======
+
+    
+""" Iterating over images on same object """
+for image in os.listdir(IMAGE_ROOT_FOLDER):
+      
+    import_object(OBECT_ROOT_PATH)
+>>>>>>> Stashed changes
     
     if "body" in obj.name:
         for image in os.listdir(IMAGE_ROOT_FOLDER):
@@ -119,6 +134,7 @@ for obj in object_list:
             print("---------------image_name :",image_name)
             image = IMAGE_ROOT_FOLDER + image
             set_active_object(obj)
+<<<<<<< Updated upstream
             apply_Image_texture(image)
             
 #            bpy.ops.object.select_all()
@@ -128,3 +144,25 @@ for obj in object_list:
         
          
         
+=======
+            apply_Image_texture(STEM_IMAGE_PATH,obj)
+            deselect_active_object(obj)   
+        
+        if "body" in obj.name:      
+                set_active_object(obj)
+                apply_Image_texture(image,obj)
+                
+                #bpy.ops.object.select_all()
+                #bpy.ops.object.join(object_list)
+                
+                #bpy.ops.wm.save_as_mainfile(object_list, filepath= r"D:\Blender\apple\objects\apple_" + image_name +".obj")
+    
+    ctx = bpy.context.copy()
+    ctx['selected_objects'] = object_list
+    bpy.ops.object.join(ctx)
+    bpy.ops.export_scene.obj(filepath=r"D:\Blender\apple\objects\apple_" + image_name +".obj")
+    object_list.clear()        
+    Delete_all_objects()
+    
+    
+>>>>>>> Stashed changes
