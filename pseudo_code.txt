@@ -1,0 +1,1285 @@
+import the objects or models from local space. // I:O
+
+create an opject for imported model // object
+
+create dictionary / array index for the builtin fixtures.{}
+
+create function which takes argument as fixture type and object
+	action: fixture get applied to the model, return fixture modle object
+
+function to save the updated fixture model()
+
+--------------------------------------------------------------------
+
+bpy.ops.object.editmode_toggle()
+bpy.context.space_data.system_bookmarks_active = 3
+bpy.ops.image.open(filepath="C:\\Users\\vs6993\\Downloads\\Red_brick_wall_texture.JPG", directory="C:\\Users\\vs6993\\Downloads\\", files=[{"name":"Red_brick_wall_texture.JPG", "name":"Red_brick_wall_texture.JPG"}], relative_path=True, show_multiview=False)
+	
+bpy.ops.object.editmode_toggle()
+bpy.ops.transform.trackball(value=(-0.03, -0.08), mirror=False, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+bpy.context.area.ui_type = 'ShaderNodeTree'
+bpy.context.area.ui_type = 'ShaderNodeTree'
+bpy.context.area.ui_type = 'VIEW_3D'
+bpy.context.space_data.shading.type = 'MATERIAL'
+bpy.context.area.ui_type = 'INFO'
+
+
+------------------------------------------------------------------------
+
+import bpy
+from math import radians
+
+bpy.ops.mesh.primitive_monkey_add(size=6, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
+monkey = bpy.context.active_object
+
+#monkey.rotation_euler[0] += radians[45]
+
+image = bpy.ops.image.open(filepath="C:\\Users\\vs6993\\Downloads\\Red_brick_wall_texture.JPG", directory="C:\\Users\\vs6993\\Downloads\\", files=[{"name":"Red_brick_wall_texture.JPG", "name":"Red_brick_wall_texture.JPG"}], relative_path=True, show_multiview=False)
+bpy.ops.object.shade_smooth()
+
+#bpy.context.space_data.context = 'MATERIAL'
+
+mod_subsurf = monkey.modifiers.new("my modifier", "SUBSURF")
+monkey.modifiers["my modifier"].levels=3
+
+
+bpy.ops.object.editmode_toggle() #changing to edit mode
+
+bpy.ops.uv.smart_project()
+
+
+bpy.ops.transform.trackball(value=(-0.03, -0.08), mirror=False, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+
+bpy.context.area.ui_type = 'ShaderNodeTree'
+
+bpy.context.area.ui_type = 'VIEW_3D'
+bpy.context.space_data.shading.type = 'MATERIAL'
+bpy.context.area.ui_type = 'INFO'
+
+----------------------------------------------------------------------------------------
+
+
+bpy.ops.object.delete(use_global=False, confirm=False)
+Deleted 1 object(s)
+bpy.context.area.ui_type = 'INFO'
+bpy.ops.object.delete(use_global=False, confirm=False)
+Deleted 1 object(s)
+bpy.ops.mesh.primitive_monkey_add(size=2, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
+bpy.ops.transform.resize(value=(3.34816, 3.34816, 3.34816), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', mirror=False, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+bpy.context.space_data.context = 'MATERIAL'
+bpy.context.space_data.context = 'MATERIAL'
+bpy.ops.material.new()
+bpy.context.space_data.system_bookmarks_active = 3
+bpy.ops.image.open(filepath="C:\\Users\\vs6993\\Downloads\\Red_brick_wall_texture.JPG", directory="C:\\Users\\vs6993\\Downloads\\", files=[{"name":"Red_brick_wall_texture.JPG", "name":"Red_brick_wall_texture.JPG"}], relative_path=True, show_multiview=False)
+bpy.context.space_data.shading.type = 'MATERIAL'
+bpy.context.space_data.shading.type = 'RENDERED'
+bpy.ops.transform.trackball(value=(-3.52, 6.69), mirror=False, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+
+
+-------------------------------------------------------------------------------------------
+#Working
+
+import bpy
+
+#deleting previos active object 
+bpy.ops.object.delete(use_global=False, confirm=False)
+
+bpy.ops.mesh.primitive_monkey_add(size=5, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
+monkey = bpy.context.active_object
+
+mod_subsurf = monkey.modifiers.new("my modifier", "SUBSURF")
+mod_subsurf.levels=3
+
+bpy.ops.object.shade_smooth()
+
+#creating new material
+new_mat = bpy.data.materials.new("my_material")
+monkey.data.materials.append(new_mat)
+
+new_mat.use_nodes = True
+nodes = new_mat.node_tree.nodes
+
+for m in bpy.data.materials:
+for k,v in m.node_tree.nodes.items()
+print(k)
+
+
+C:\Users\vs6993\Pictures\brad-huchteman-stone-mountain.resized.jpg
+
+https://blender.stackexchange.com/questions/201412/how-to-load-an-image-from-disc-and-assign-it-to-a-newly-created-image-texture-no
+
+**************************************************************************************************
+
+import bpy
+import os
+import time
+
+
+
+
+mat = bpy.context.object.active_material
+nodes = mat.node_tree.nodes
+nodes.clear()
+
+node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+node_principled.location = 0,0
+node_tex = nodes.new('ShaderNodeTexImage')
+ 
+
+node_tex.image = bpy.data.images.load(r"C:\Users\vs6993\Downloads\Red_brick_wall_texture.JPG")
+
+node_tex.location = -400,0
+node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+node_output.location = 400,0
+links = mat.node_tree.links
+link = links.new(node_tex.outputs["Color"], node_principled.inputs["Base Color"])
+link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+
+time.sleep(4)
+node_tex.image = bpy.data.images.load(r"C:\Users\vs6993\Pictures\CycleOfLife.jpg")
+
+TEXTURE_IMAGES_FOLDER= r"D:\Blender\texture_imges"
+SAVE_BLENDER_FILE= r""
+
+#for m in bpy.data.materials:
+#    for k,v in m.node_tree.nodes.items():
+#        print(k)
+
+TextureImageList = os.listdir(TEXTURE_IMAGES_FOLDER)
+for image in TextureImageList:
+    pass
+	
+	
+////////////////////////////////////////////////////////////////////////////
+
+import bpy
+import os
+import time
+
+
+
+bpy.ops.object.delete(use_global=False, confirm=False)
+
+bpy.ops.mesh.primitive_monkey_add(size=3, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
+
+active_obj = bpy.context.active_object
+
+mod_subsurf = active_obj.modifiers.new("my modifier", "SUBSURF")
+mod_subsurf.levels=4
+
+
+#active_material = bpy.context.object.active_material
+#nodes = mat.node_tree.nodes
+#nodes.clear()
+
+new_mat = bpy.data.materials.new("my_material")
+active_obj.data.materials.append(new_mat)
+
+new_mat.use_nodes = True
+nodes = new_mat.node_tree.nodes
+
+node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+node_principled.location = 0,0
+node_tex = nodes.new('ShaderNodeTexImage')
+ 
+for image in os.listdir(IMAGE_ROOT_FOLDER):
+	image = IMAGE_ROOT_FOLDER + image
+    
+	node_tex.image = bpy.data.images.load(image)
+
+	node_tex.location = -400,0
+	node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+	node_output.location = 400,0
+	links = mat.node_tree.links
+	link = links.new(node_tex.outputs["Color"], node_principled.inputs["Base Color"])
+	link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+	
+	
+*****************************************************************************************
+
+import bpy
+import os
+import time
+
+
+IMAGE_ROOT_FOLDER = "D:\\Blender\\texture_imges\\"
+
+mat = bpy.context.object.active_material
+nodes = mat.node_tree.nodes
+nodes.clear()
+
+node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+node_principled.location = 0,0
+node_tex = nodes.new('ShaderNodeTexImage')
+ 
+ 
+for image in os.listdir(IMAGE_ROOT_FOLDER):
+    image = IMAGE_ROOT_FOLDER + image
+
+    node_tex.image = bpy.data.images.load(image)
+
+    node_tex.location = -400,0
+    node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+    node_output.location = 400,0
+    links = mat.node_tree.links
+    link = links.new(node_tex.outputs["Color"], node_principled.inputs["Base Color"])
+    link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+	
+	
+---------------------------------------------------------------------------------------------
+
+import bpy
+import os
+import time
+
+
+IMAGE_ROOT_FOLDER = "D:\\Blender\\texture_imges\\"
+
+def render_object(root_path):
+    
+    mat = bpy.context.object.active_material
+    nodes = mat.node_tree.nodes
+    nodes.clear()
+
+    node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+    node_principled.location = 0,0
+    node_tex = nodes.new('ShaderNodeTexImage')
+    
+    node_tex.image = bpy.data.images.load(root_path)
+    
+    node_tex.location = -400,0
+    node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+    node_output.location = 400,0
+    links = mat.node_tree.links
+    link = links.new(node_tex.outputs["Color"], node_principled.inputs["Base Color"])
+    link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+
+ 
+for image in os.listdir(IMAGE_ROOT_FOLDER):
+    image = IMAGE_ROOT_FOLDER + image
+    render_object(image)
+    time.sleep(4)
+	
+*********************************************************************************
+
+//crashing
+
+import bpy
+import os
+import time
+
+
+IMAGE_ROOT_FOLDER = "D:\\Blender\\texture_imges\\"
+
+def render_object(root_path):
+    
+    if(bpy.context.object.active_material):
+        mat = bpy.context.object.active_material
+        nodes = mat.node_tree.nodes
+        nodes.clear()
+        create_nodes(mat,nodes,root_path)
+        
+        
+    else:
+        active_obj = bpy.context.active_object
+        new_mat = bpy.data.materials.new("my_material")
+        active_obj.data.materials.append(new_mat)
+        
+        new_mat.use_nodes = True
+        nodes = new_mat.node_tree.nodes
+        nodes.clear()
+        create_nodes(new_mat,nodes,root_path)
+        
+    
+def create_nodes(new_mat ,nodes,root_path):
+    node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+    node_principled.location = 0,0
+    node_tex = nodes.new('ShaderNodeTexImage')
+    
+    node_tex.image = bpy.data.images.load(root_path)
+    
+    node_tex.location = -400,0
+    node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+    node_output.location = 400,0
+    links = new_mat.node_tree.links
+    link = links.new(node_tex.outputs["Color"], node_principled.inputs["Base Color"])
+    link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+
+ 
+for image in os.listdir(IMAGE_ROOT_FOLDER):
+    image = IMAGE_ROOT_FOLDER + image
+    render_object(image)
+    time.sleep(2)
+	
+	
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+
+
+import bpy
+import os
+import time
+
+
+
+def create_nodes(new_mat ,nodes,root_path = ""):
+    new_mat.use_nodes = True
+    node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+    node_principled.location = 0,0
+    node_tex = nodes.new('ShaderNodeTexImage')
+    
+    node_brick = nodes.new('ShaderNodeTexBrick')
+    node_magic = nodes.new('ShaderNodeTexMagic')
+    node_checker = nodes.new('ShaderNodeTexChecker')
+    node_environment = nodes.new('ShaderNodeTexEnvironment')
+    node_gradient = nodes.new('ShaderNodeTexGradient')
+    node_Noise = nodes.new('ShaderNodeTexNoise')
+    node_Point = nodes.new('ShaderNodeTexPointDensity')
+    node_Voronoi = nodes.new('ShaderNodeTexVoronoi')
+    node_Wave = nodes.new('ShaderNodeTexWave')
+    node_WhiteNoise = nodes.new('ShaderNodeTexWhiteNoise')
+    
+      
+    
+#    node_tex.image = bpy.data.images.load(root_path)
+    
+    node_tex.location = -400,0
+    node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+    node_output.location = 400,0
+    links = new_mat.node_tree.links
+    link = links.new(node_environment.outputs["Color"], node_principled.inputs["Base Color"])
+    link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+
+
+mat = bpy.context.object.active_material
+nodes = mat.node_tree.nodes
+nodes.clear()
+create_nodes(mat,nodes)
+
+
+
+*************************************************************************************
+
+import bpy
+import os
+import time
+
+
+Class New_materila():
+    
+    def __init__(self):
+        self.mat = bpy.context.object.active_material
+        self.nodes = mat.node_tree.nodes
+        self.nodes.clear()
+        self.create_nodes(mat,nodes)
+        
+
+    def create_nodes(self,new_mat ,nodes,root_path = ""):
+        new_mat.use_nodes = True
+        node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+        node_principled.location = 0,0
+        node_tex = nodes.new('ShaderNodeTexImage')
+        
+        self.node_brick = nodes.new('ShaderNodeTexBrick')
+        self.node_magic = nodes.new('ShaderNodeTexMagic')
+        self.node_checker = nodes.new('ShaderNodeTexChecker')
+        self.node_environment = nodes.new('ShaderNodeTexEnvironment')
+        self.node_gradient = nodes.new('ShaderNodeTexGradient')
+        self.node_Noise = nodes.new('ShaderNodeTexNoise')
+        self.node_Point = nodes.new('ShaderNodeTexPointDensity')
+        self.node_Voronoi = nodes.new('ShaderNodeTexVoronoi')
+        self.node_Wave = nodes.new('ShaderNodeTexWave')
+        self.node_WhiteNoise = nodes.new('ShaderNodeTexWhiteNoise')
+        
+          
+#    node_tex.image = bpy.data.images.load(root_path)
+    
+        node_tex.location = -400,0
+        node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+        node_output.location = 400,0
+        links = new_mat.node_tree.links
+        link = links.new(node_magic.outputs["Color"], node_principled.inputs["Base Color"])
+        link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+
+if "__main__" =="__file__":
+	
+	exception hi
+    mat = bpy.context.object.active_material
+    nodes = mat.node_tree.nodes
+    nodes.clear()
+	debug
+	
+create_nodes(mat,nodes)
+
+
+-----------------------------------------------------
+ob = bpy.context.scene.objects["Cube"]       # Get the object
+bpy.ops.object.select_all(action='DESELECT') # Deselect all objects
+bpy.context.view_layer.objects.active = ob
+
+
+bpy.ops.object.select_all()
+bpy.ops.object.join()
+bpy.ops.export_scene.obj(filepath=r"C:\Users\vs6993\Documents\mango5.obj")
+
+
+------------------------------------------------------------------------------------------------------------
+change_texture578.py
+
+import bpy
+import os
+
+SAVE_OBJECTS = ""
+
+#OBECT_ROOT_PATH = "D:\\Blender\\3D_MODELS\\apple_seperated.obj" 
+OBECT_ROOT_PATH = "D:\\Blender\\3D_MODELS\\Apple\\Appple_body_stem.obj" 
+
+APPLE_body = "D:\\Blender\\apple\\body\\download(2).jpg"
+
+IMAGE_ROOT_FOLDER = "D:\\Blender\\apple\\body\\"
+STEM_IMAGE_PATH = "D:\\Blender\\apple\\stem\\Apple_stem.jpg"
+LEAF_IMAGE_PATH = "D:\\Blender\\Leaf(1).jpg"
+
+#imported_object = bpy.ops.import_scene.obj(filepath=OBECT_ROOT_PATH)
+
+""" storing the objects in the list"""
+object_list = []
+ctx = {}
+
+
+"""set active object"""
+def set_active_object( object):
+    #bpy.data.collections[Collection_name].objects[object_name].select_set(True)
+    #bpy.data.objects[object].select_set(True)
+    bpy.context.view_layer.objects.active = object 
+    bpy.data.objects[object.name].select_set(True)
+    #bpy.context.scene.objects.active = object
+    
+    
+"""deselect the active object"""   
+def deselect_active_object( object):
+    #bpy.data.collections[Collection_name].objects[object_name].select_set(False)
+    bpy.data.objects[object.name].select_set(False)
+    
+    """import the objetc"""
+def import_object(path):
+    imported_object = bpy.ops.import_scene.obj(filepath=path)
+     
+    """Delete all objects """
+def Delete_all_objects():
+    bpy.ops.object.select_all()
+    bpy.ops.object.delete()
+    
+    
+ 
+    
+#iterate over objects in collections
+#for obj in bpy.data.objects:
+#    if obj.name != "Camera":
+#        object_list.append(obj)
+        
+
+def apply_Image_texture(root_path):
+    """
+    This function imports the image and superimposes it onto the active abject.
+    :param root_path:
+    :return:
+    """
+    try:
+        if(bpy.context.object.active_material):
+            mat = bpy.context.object.active_material
+            nodes = mat.node_tree.nodes
+            nodes.clear()
+            create_nodes(mat,nodes,root_path)
+
+        else:
+            
+            active_obj = bpy.context.view_layer.objects.active
+            #active_obj = obj
+            new_mat = bpy.data.materials.new("my_material")
+            active_obj.data.materials.append(new_mat)
+
+            new_mat.use_nodes = True
+            nodes = new_mat.node_tree.nodes
+            nodes.clear()
+            create_nodes(new_mat,nodes,root_path)
+
+    except Exception as e:
+        print(e)
+        
+def create_nodes(new_mat ,nodes,root_path):
+    """
+    Creates new  Principled Bsdf shader node,
+    texture node and output node and links them
+    :param new_mat:
+    :param nodes:
+    :param root_path:
+    :return:
+    """
+
+    node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+    node_principled.location = 0,0
+    node_tex = nodes.new('ShaderNodeTexImage')
+    
+    node_tex.image = bpy.data.images.load(root_path)
+    
+    node_tex.location = -400,0
+    node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+    node_output.location = 400,0
+    links = new_mat.node_tree.links
+    link = links.new(node_tex.outputs["Color"], node_principled.inputs["Base Color"])
+    link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+        
+    
+
+Stem_object = "stem_Manzana.002"
+Body_object = "body_Manzana.001"
+
+"""Iterate our images in local folder"""
+
+"""set stem as active object and apply texture"""
+#set_active_object("Collection",Stem_object)
+#apply_Image_texture(STEM_IMAGE_PATH)
+#deselect_active_object("Collection",Stem_object)
+
+#set_active_object("Collection",Body_object)
+#for image in os.listdir(IMAGE_ROOT_FOLDER):
+#    image = IMAGE_ROOT_FOLDER + image
+#    apply_Image_texture(image)
+    
+
+for image in os.listdir(IMAGE_ROOT_FOLDER):
+       
+    import_object(OBECT_ROOT_PATH)
+
+    object_list = [ obj for obj in bpy.data.objects if obj.name != "Camera" ]
+            
+    image_name = image.split('.')[0]
+    print("---------------image_name :",image_name)
+    image = IMAGE_ROOT_FOLDER + image
+
+    for obj in object_list:
+        
+#        if "leaf" in obj.name:
+#            set_active_object(obj)
+#            apply_Image_texture(LEAF_IMAGE_PATH,obj)
+#            deselect_active_object(obj)
+#        
+#        if "stem" in obj.name:
+#            set_active_object(obj)
+#            apply_Image_texture(STEM_IMAGE_PATH)
+#            deselect_active_object(obj)      
+                       
+        if "body" in obj.name:        
+                set_active_object(obj)
+                apply_Image_texture(image)
+                
+                #bpy.ops.object.select_all()
+                #bpy.ops.object.join(object_list)            
+                #bpy.ops.wm.save_as_mainfile(object_list, filepath= r"D:\Blender\apple\objects\apple_" + image_name +".obj")
+    
+    ctx = bpy.context.copy()
+    ctx['selected_objects'] = object_list
+    bpy.ops.object.join(ctx)
+    bpy.ops.export_scene.obj(filepath=r"D:\Blender\apple\generated_objects\apple_" + image_name +".obj")
+    object_list.clear()
+    ctx.clear()        
+    Delete_all_objects()
+	
+	
+-----------------------------**************************************************------------------------------------------------------------***********************-
+b.py
+
+
+
+
+import bpy
+import os
+
+OBECT_ROOT_PATH = "D:\\Blender\\Data_models\\apple\\object\\Appple_body_stem.obj" 
+SAVE_OBJECTS = "D:\\Blender\\apple\\objects\\apple_"
+
+APPLE_body = "D:\\Blender\\apple\\body\\download(3).jpg"
+
+IMAGE_ROOT_FOLDER = "D:\\Blender\\apple\\body\\"
+STEM_IMAGE_PATH = "D:\\Blender\\apple\\stem\\Apple_stem.jpg"
+
+object_list = []
+ctx = {}
+
+def import_obj():
+    #global object_list
+    bpy.ops.import_scene.obj(filepath=OBECT_ROOT_PATH)
+    """ storing the objects in the list"""
+    
+
+
+
+
+"""set active object"""
+def set_active_object( object):
+    #bpy.data.collections[Collection_name].objects[object_name].select_set(True)
+    #bpy.data.objects[object].select_set(True)
+    bpy.context.view_layer.objects.active = object 
+    bpy.data.objects[object.name].select_set(True)
+    #bpy.context.scene.objects.active = object
+    
+    
+"""deselect the active object"""   
+def deselect_active_object( object):
+    #bpy.data.collections[Collection_name].objects[object_name].select_set(False)
+    bpy.data.objects[object.name].select_set(False)
+    
+
+    """import the objetc"""
+def import_object(path):
+    imported_object = bpy.ops.import_scene.obj(filepath=path)
+     
+    """Delete all objects """
+def Delete_the_object():
+    object_list = [obj for obj in bpy.data.objects if obj.name != "Camera"]
+    for obj in object_list:
+        if (obj.name != "camera"):
+            obj.select_set(True)
+            bpy.ops.object.delete()
+    
+
+    
+#iterate over objects in collections
+#for obj in bpy.data.objects:
+#    if obj.name != "Camera":
+#        object_list.append(obj)
+        
+
+def apply_Image_texture(root_path):
+    """
+    This function imports the image and superimposes it onto the active abject.
+    :param root_path:
+    :return:
+    """
+    try:
+        if(bpy.context.object.active_material):
+            mat = bpy.context.object.active_material
+            nodes = mat.node_tree.nodes
+            nodes.clear()
+            create_nodes(mat,nodes,root_path)
+
+        else:
+            
+            active_obj = bpy.context.view_layer.objects.active
+            new_mat = bpy.data.materials.new("my_material")
+            active_obj.data.materials.append(new_mat)
+
+            new_mat.use_nodes = True
+            nodes = new_mat.node_tree.nodes
+            nodes.clear()
+            create_nodes(new_mat,nodes,root_path)
+
+    except Exception as e:
+        print(e)
+        
+def create_nodes(new_mat ,nodes,root_path):
+    """
+    Creates new  Principled Bsdf shader node,
+    texture node and output node and links them
+    :param new_mat:
+    :param nodes:
+    :param root_path:
+    :return:
+    """
+
+    node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+    node_principled.location = 0,0
+    node_tex = nodes.new('ShaderNodeTexImage')
+    
+    node_tex.image = bpy.data.images.load(root_path)
+    
+    node_tex.location = -400,0
+    node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+    node_output.location = 400,0
+    links = new_mat.node_tree.links
+    link = links.new(node_tex.outputs["Color"], node_principled.inputs["Base Color"])
+    link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+        
+
+
+"""set stem as active object and apply texture"""
+#set_active_object("Collection",Stem_object)
+#apply_Image_texture(STEM_IMAGE_PATH)
+#deselect_active_object("Collection",Stem_object)
+
+#set_active_object("Collection",Body_object)
+#for image in os.listdir(IMAGE_ROOT_FOLDER):
+#    image = IMAGE_ROOT_FOLDER + image
+#    apply_Image_texture(image)
+
+#for obj in object_list:
+#    
+#    if "stem" in obj.name:
+#        set_active_object(obj)
+#        apply_Image_texture(STEM_IMAGE_PATH)
+#        deselect_active_object(obj)
+    
+    
+""" Iterating over images on same object """
+for image in os.listdir(IMAGE_ROOT_FOLDER):
+    
+    image_name = image.split('.')[0]
+    print("---------------image_name :",image_name)
+    image = IMAGE_ROOT_FOLDER + image
+      
+    import_obj()
+    object_list = [ obj for obj in bpy.data.objects if obj.name != "Camera" ]
+
+    for obj in object_list:
+        
+        if "body" in obj.name:             
+                set_active_object(obj)
+                apply_Image_texture(image)
+                deselect_active_object(obj)
+                                   
+        if "stem" in obj.name:      
+                    set_active_object(obj)
+                    apply_Image_texture(STEM_IMAGE_PATH)
+                    deselect_active_object(obj)
+                    
+                    #bpy.ops.object.select_all()
+                    #bpy.ops.object.join(object_list)
+    
+    for obj in object_list:
+        obj.select_set(True)
+    bpy.ops.object.join()
+    
+    active_obj = bpy.context.view_layer.objects.active
+    save_obj = active_obj.name = "apple_" + image_name
+    
+    bpy.ops.export_scene.obj(filepath=r"D:\\Blender\\apple\\generated_objects\\"+ save_obj +".obj")
+    object_list.clear()
+    
+            
+    Delete_the_object()
+	
+	
+	
+	
+	============================================================================================================================================================================
+	change_texture578.py
+	
+	
+	
+import bpy
+import os
+
+SAVE_PATH = r"D:\\Blender\\Generated_3D_MODELS"
+Root = r"D:\Blender\vegitables_modles"
+
+source = r"\\source"
+texture = r"\\textures"
+
+STEM_IMAGE_PATH = "D:\\Blender\\apple\\stem\\Apple_stem.jpg"
+
+#OBECT_ROOT_PATH = "D:\\Blender\\3D_MODELS\\apple_seperated.obj" 
+#OBECT_ROOT_PATH = "D:\\Blender\\3D_MODELS\\Apple\\Appple_body_stem.obj" 
+
+#APPLE_body = "D:\\Blender\\apple\\body\\download(2).jpg"
+#IMAGE_ROOT_FOLDER = "D:\\Blender\\apple\\body\\"
+#STEM_IMAGE_PATH = "D:\\Blender\\apple\\stem\\Apple_stem.jpg"
+#LEAF_IMAGE_PATH = "D:\\Blender\\Leaf(1).jpg"
+
+#imported_object = bpy.ops.import_scene.obj(filepath=OBECT_ROOT_PATH)
+
+""" storing the objects in the list"""
+object_list = []
+ctx = {}
+
+
+"""set active object"""
+def set_active_object( object):
+    #bpy.data.collections[Collection_name].objects[object_name].select_set(True)
+    #bpy.data.objects[object].select_set(True)
+    bpy.context.view_layer.objects.active = object 
+    bpy.data.objects[object.name].select_set(True)
+    #bpy.context.scene.objects.active = object
+    
+    
+"""deselect the active object"""   
+def deselect_active_object( object):
+    #bpy.data.collections[Collection_name].objects[object_name].select_set(False)
+    bpy.data.objects[object.name].select_set(False)
+    
+    """import the objetc"""
+def import_object(object_root_path):
+    x=[os.path.join(object_root_path,file) for file in os.listdir(object_root_path) if file.endswith('.obj')]
+    bpy.ops.import_scene.obj(filepath=x[0])
+    print("importing object :", x[0])
+     
+    """Delete all objects """
+#def Delete_all_objects(): 
+#    bpy.ops.object.select_all()
+#    bpy.ops.object.delete()
+#    print("Deleated all aobjects ---->")
+#    print("object available are :",bpy.ops.aobjects)
+    
+def Delete_the_object():
+    object_list = [obj for obj in bpy.data.objects if obj.name != "Camera"]
+    for obj in object_list:
+        if (obj.name != "camera"):
+            obj.select_set(True)
+            bpy.ops.object.delete()
+            print("Deleted the object ---->")
+            
+    
+    
+ 
+    
+#iterate over objects in collections
+#for obj in bpy.data.objects:
+#    if obj.name != "Camera":
+#        object_list.append(obj)
+        
+
+def apply_Image_texture(root_path):
+    """
+    This function imports the image and superimposes it onto the active abject.
+    :param root_path:
+    :return:
+    """
+    try:
+        if(bpy.context.object.active_material):
+            mat = bpy.context.object.active_material
+            nodes = mat.node_tree.nodes
+            nodes.clear()
+            create_nodes(mat,nodes,root_path)
+
+        else:
+            
+            active_obj = bpy.context.view_layer.objects.active
+            #active_obj = obj
+            new_mat = bpy.data.materials.new("my_material")
+            active_obj.data.materials.append(new_mat)
+
+            new_mat.use_nodes = True
+            nodes = new_mat.node_tree.nodes
+            nodes.clear()
+            create_nodes(new_mat,nodes,root_path)
+
+    except Exception as e:
+        print(e)
+        
+def create_nodes(new_mat ,nodes,root_path):
+    """
+    Creates new  Principled Bsdf shader node,
+    texture node and output node and links them
+    :param new_mat:
+    :param nodes:
+    :param root_path:
+    :return:
+    """
+
+    node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+    node_principled.location = 0,0
+    node_tex = nodes.new('ShaderNodeTexImage')
+    
+    node_tex.image = bpy.data.images.load(root_path)
+    
+    node_tex.location = -400,0
+    node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+    node_output.location = 400,0
+    links = new_mat.node_tree.links
+    link = links.new(node_tex.outputs["Color"], node_principled.inputs["Base Color"])
+    link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+        
+    
+
+Stem_object = "stem_Manzana.002"
+Body_object = "body_Manzana.001"
+
+"""Iterate our images in local folder"""
+
+"""set stem as active object and apply texture"""
+#set_active_object("Collection",Stem_object)
+#apply_Image_texture(STEM_IMAGE_PATH)
+#deselect_active_object("Collection",Stem_object)
+
+#set_active_object("Collection",Body_object)
+#for image in os.listdir(IMAGE_ROOT_FOLDER):
+#    image = IMAGE_ROOT_FOLDER + image
+#    apply_Image_texture(image)
+
+dirs = []
+
+for filename in os.listdir(Root):
+    f = os.path.join(Root, filename)
+    if not os.path.isfile(f):
+        dirs.append(f)
+print("Directores: ", dirs)
+
+for i in dirs:
+    
+    print("i ->>",i)
+    folder = i.split('\\')[-1]
+
+    object_path = i+source
+    texture_path = i+texture
+    print("objectPath -->",object_path)
+    print("TexturePath -->",texture_path)
+    
+    for image in os.listdir(texture_path):
+        import_object(object_path)
+              
+        object_list = [ obj for obj in bpy.data.objects if obj.name != "Camera" ]
+        print("Object list : -->", object_list)    
+            
+        image_name = image.split('.')[0]
+        print("---------------image_name :",image_name)
+        
+        image_path = texture_path + "\\"+ image
+        print("Image_path : -->", image_path) 
+
+        for obj in object_list:
+                                
+            if "body" in obj.name:        
+                    set_active_object(obj)
+                    apply_Image_texture(image_path)
+                    deselect_active_object(obj)
+                    
+            if "stem" in obj.name:      
+                    set_active_object(obj)
+                    apply_Image_texture(STEM_IMAGE_PATH)
+                    deselect_active_object(obj)
+                    
+        
+        for obj in object_list:
+            obj.select_set(True)
+        bpy.ops.object.join()
+        
+        
+        
+        active_obj = bpy.context.view_layer.objects.active
+        print("active Object Name ---> ", active_obj.name)
+        folder = active_obj.name = folder + image_name
+        os.makedirs(SAVE_PATH+"\\"+folder)
+        
+        bpy.ops.export_scene.obj(filepath=SAVE_PATH + "\\"+ folder +"\\"+active_obj.name +".obj")
+        
+        object_list.clear()  
+        Delete_the_object()
+    
+        print("<-------------------------------->")
+        
+print("<-----Completed Generating textured objects ---->")
+   
+   
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+final change_texture578.py
+
+
+
+########################################################################
+#           Author Vs6993    _Veeresh_SM_                              #
+#           date September 2022                                        #
+########################################################################
+
+
+"""
+This script generated 3D objects with different texture using the Blender
+provided input : 3D Object with segmented parts like body, stem , leaf etc
+         input : Texture images for specific objext's body segment
+"""
+
+import bpy
+import os
+
+SAVE_PATH = r"D:\\Blender\\Generated_3D_MODELS"
+Root = r"D:\\Blender\\vegitables_modles"
+
+source = r"source"
+texture = r"textures"
+
+body_texture = r"body_texture"
+leaf_texture = r"leaf_texture"
+stem_texture = r"stem_texture"
+
+
+""" storing the objects in the list"""
+object_list = []
+ctx = {}
+
+
+"""set active object"""
+def set_active_object( object):
+    #bpy.data.collections[Collection_name].objects[object_name].select_set(True)
+    #bpy.data.objects[object].select_set(True)
+    bpy.context.view_layer.objects.active = object 
+    bpy.data.objects[object.name].select_set(True)
+    #bpy.context.scene.objects.active = object
+    
+    
+"""deselect the active object"""   
+def deselect_active_object( object):
+    #bpy.data.collections[Collection_name].objects[object_name].select_set(False)
+    bpy.data.objects[object.name].select_set(False)
+    
+    """importing the object"""
+def import_object(object_root_path):
+    x=[os.path.join(object_root_path,file) for file in os.listdir(object_root_path) if file.endswith('.obj')]
+    bpy.ops.import_scene.obj(filepath=x[0])
+    print("importing object :", x[0])
+     
+
+
+def join_and_save(folder,body_image,leaf_image ="",stem_image="",):            
+        
+            for obj in object_list:
+                if "body" in obj.name or "stem" in obj.name or "leaf" in obj.name:
+                    obj.select_set(True)
+            if bpy.ops.object.join() != {'FINISHED'}:
+                print("Error -------> not able to join the object")
+            
+            body_image  = body_image.split('.')[0]         
+            if  leaf_image:
+                leaf_image = leaf_image.split('.')[0]
+            
+            if  stem_image:
+                stem_image = stem_image.split('.')[0]
+        
+            active_obj = bpy.context.view_layer.objects.active
+            print("active Object Name ---> ", active_obj.name)
+            folder = active_obj.name = folder + "_"+ body_image+ "_" + leaf_image+ "_" + stem_image
+            print("folder --->",folder)
+            
+            os.makedirs(SAVE_PATH+"\\"+folder)
+            bpy.ops.export_scene.obj(filepath=SAVE_PATH + "\\"+ folder +"\\"+active_obj.name +".obj")
+        
+            object_list.clear()  
+            
+            print("<  Saved the object -------------------------------->")
+    
+def Delete_the_object():
+    object_list = [obj for obj in bpy.data.objects if "Camera" not in obj.name]
+    print("object_list ---- >", object_list)
+    
+    for obj in object_list:
+        if ("Camera" not in obj.name):
+            obj.select_set(True)
+    
+    bpy.ops.object.delete()
+    print("Deleted the object ---->")
+                    
+
+def apply_Image_texture(root_path):
+    """
+    This function imports the image and superimposes it onto the active abject.
+    :param root_path:
+    :return:
+    """
+    try:
+        if(bpy.context.object.active_material):
+            mat = bpy.context.object.active_material
+            nodes = mat.node_tree.nodes
+            nodes.clear()
+            create_nodes(mat,nodes,root_path)
+
+        else:
+            
+            active_obj = bpy.context.view_layer.objects.active
+            #active_obj = obj
+            new_mat = bpy.data.materials.new("my_material")
+            active_obj.data.materials.append(new_mat)
+
+            new_mat.use_nodes = True
+            nodes = new_mat.node_tree.nodes
+            nodes.clear()
+            create_nodes(new_mat,nodes,root_path)
+
+    except Exception as e:
+        print(e)
+        
+def create_nodes(new_mat ,nodes,root_path):
+    """
+    Creates new  Principled Bsdf shader node,
+    texture node and output node and links them
+    :param new_mat:
+    :param nodes:
+    :param root_path:
+    :return:
+    """
+
+    node_principled = nodes.new(type='ShaderNodeBsdfPrincipled')
+    node_principled.location = 0,0
+    node_tex = nodes.new('ShaderNodeTexImage')
+    
+    node_tex.image = bpy.data.images.load(root_path)
+    
+    node_tex.location = -400,0
+    node_output = nodes.new(type='ShaderNodeOutputMaterial')   
+    node_output.location = 400,0
+    links = new_mat.node_tree.links
+    link = links.new(node_tex.outputs["Color"], node_principled.inputs["Base Color"])
+    link = links.new(node_principled.outputs["BSDF"], node_output.inputs["Surface"])
+        
+    
+#def Generate_models():
+
+dirs = [] #saving the directory structure
+
+for filename in os.listdir(Root):
+    f = os.path.join(Root, filename)
+    if not os.path.isfile(f):
+        dirs.append(f)
+print("Directores: ", dirs)
+
+#main for loop
+for i in dirs:
+    
+    print("i ->>>>>>",i)
+    folder = i.split('\\')[-1]
+
+    object_path = os.path.join(i,source)
+    texture_path = os.path.join(i,texture)
+    print("objectPath -->",object_path)
+    print("TexturePath -->",texture_path)
+    
+    import_object(object_path)          
+    object_list = [ obj for obj in bpy.data.objects if "Camera" not in obj.name ]
+    
+    
+    body_texture_path = os.path.join(texture_path,body_texture)
+    leaf_texture_path = os.path.join(texture_path,leaf_texture)
+    stem_texture_path = os.path.join(texture_path,stem_texture)
+    
+    print("body_texture_path --- >",body_texture_path)
+    print("leaf_texture_path --- >",leaf_texture_path)
+    print("stem_texture_path --- >",stem_texture_path)
+    
+    body_texture_images = leaf_texture_images = stem_texture_images = []
+    
+    if os.path.isdir(body_texture_path):
+        body_texture_images = os.listdir(body_texture_path)
+    if os.path.isdir(leaf_texture_path):
+        leaf_texture_images = os.listdir(leaf_texture_path)
+    if os.path.isdir(stem_texture_path):
+        stem_texture_images = os.listdir(stem_texture_path)
+        
+    print("body_texture_images --- >",body_texture_images)
+    print("leaf_texture_images --- >",leaf_texture_images)
+    print("stem_texture_images --- >",stem_texture_images)
+            
+        
+    body_leaf = body_stem = False
+    only_body = True
+    
+    for obj in object_list:
+        if "leaf" in obj.name:
+            body_leaf = True
+        if "stem" in obj.name:
+            body_stem = True
+            
+    Delete_the_object()
+    object_list.clear()
+    
+    # iterate when object has all the  segments body,stem,leaf 
+    if body_leaf and body_stem: #all
+
+        for stem in stem_texture_images:
+            for leaf in leaf_texture_images:
+                for body in body_texture_images:
+                    
+                    import_object(object_path)
+                    object_list = [ obj for obj in bpy.data.objects if "Camera" not in obj.name ]
+                    
+                    for obj in object_list:
+                        if "body" in obj.name:
+                            set_active_object(obj)
+                            apply_Image_texture(os.path.join(body_texture_path,body))
+                            deselect_active_object(obj)
+                            
+                        if "leaf" in obj.name:
+                            set_active_object(obj)
+                            apply_Image_texture(os.path.join(leaf_texture_path,leaf))
+                            deselect_active_object(obj)
+                            
+                        if "stem" in obj.name:
+                            set_active_object(obj)
+                            apply_Image_texture(os.path.join(stem_texture_path,stem))
+                            deselect_active_object(obj)
+                            
+                    #save the model
+                    join_and_save(folder,body,leaf,stem)
+                    Delete_the_object()
+                            
+    #Iterate only when object has body and leaf 
+    elif body_leaf:
+        
+        for leaf in leaf_texture_images:
+            for body in body_texture_images:
+                
+                import_object(object_path) 
+                object_list = [ obj for obj in bpy.data.objects if "Camera" not in obj.name ]
+                
+                for obj in object_list:
+                    if "body" in obj.name:
+                            set_active_object(obj)
+                            apply_Image_texture(os.path.join(body_texture_path,body))
+                            deselect_active_object(obj)
+                            
+                    if "leaf" in obj.name:
+                            set_active_object(obj)
+                            apply_Image_texture(os.path.join(leaf_texture_path,leaf))
+                            deselect_active_object(obj)
+                #save the model
+                join_and_save(folder,body,leaf)
+                Delete_the_object()
+        
+    #Iterate only when object ahs  body and stem 
+    elif body_stem:
+        for stem in stem_texture_images:
+            for body in body_texture_images:
+                
+                import_object(object_path)
+                object_list = [ obj for obj in bpy.data.objects if "Camera" not in obj.name ]
+                
+                for obj in object_list:
+                    if "body" in obj.name:
+                            set_active_object(obj)
+                            apply_Image_texture(os.path.join(body_texture_path,body))
+                            deselect_active_object(obj)
+                            
+                    if "stem" in obj.name:
+                            set_active_object(obj)
+                            
+                            apply_Image_texture(os.path.join(stem_texture_path,stem))
+                            deselect_active_object(obj)
+                #save the model
+                join_and_save(folder,body,stem)
+                Delete_the_object()
+                
+    #Iterate only when object has body segment
+    else:
+        for body in body_texture_images:
+            
+            import_object(object_path)
+            object_list = [ obj for obj in bpy.data.objects if "Camera" not in obj.name ]
+            
+            for obj in object_list:
+                    if "body" in obj.name:
+                        set_active_object(obj)
+                        
+                        apply_Image_texture(os.path.join(body_texture_path,body))
+                        deselect_active_object(obj)
+                        print("applied texture----------->",body)
+            #save the model
+            join_and_save(folder,body)
+            Delete_the_object()    
+                        
+        
+print("<-----Completed Generating textured objects ---->")
+    
+    
+#if __name__ == '__main__':
+#    Generate_models()
+    
+
+
+	
